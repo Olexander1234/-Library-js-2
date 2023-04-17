@@ -9,6 +9,9 @@ const refs = {
 } 
 
 refs.formEl.addEventListener('submit',onSubmit )
+refs.taskListEl.addEventListener('change', oncheckBox)
+refs.taskListEl.addEventListener('click', onDelete)
+
 function onSubmit(event) {
     event.preventDefault();
 
@@ -16,7 +19,7 @@ function onSubmit(event) {
         return   alert('Ведіть щось!!!!!!!!!!!!!!!!!!')
     } 
     refs.taskListEl.insertAdjacentHTML('afterbegin',`
-    <li class='completed '> 
+    <li > 
     <input type="checkbox" class='checkbox'>
     <p>${refs.inputEl.value}</p>
     <button type="button">delete</button>
@@ -24,17 +27,27 @@ function onSubmit(event) {
     </li> 
     `)
     refs.formEl.reset()
-  const checkBox = document.querySelector('.checkbox')
-  const  list = document.querySelector('.completed')
-    checkBox.addEventListener('change', oncheckBox)
-    function oncheckBox() {
-        if (checkBox.checked === true) {
-        list.classList.add('completed')
-        } else {
-            list.classList.remove('completed')
+}
+  
+
+    function oncheckBox(event) {
+        if (event.target.type === 'checkbox' ) {
+            if (event.target.checked) {
+                event.target.parentNode.classList.add('completed')
+                
+                
+                } else {
+                    event.target.parentNode.classList.remove('completed')
+                }
+            }
         }
-    }
+       
     
 
-
+function onDelete(event){
+if (event.target.nodeName === 'BUTTON') {
+    console.log( event.target.parentNode);
+    event.target.parentNode.remove()
 }
+}
+
